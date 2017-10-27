@@ -25,12 +25,12 @@ int main(int argc, char **argv){
 	ros::NodeHandle n;
 
 	// 2. ROS Subscriber setting
-	sub_fromTaskExe = n.subscribe("json_TaskExe", 100, Callback_fromTaskExe);
-	sub_fromSilbot = n.subscribe("json_SilbotComp", 100, Callback_fromSilbot);
+	sub_fromTaskExe = n.subscribe("taskExecution", 100, Callback_fromTaskExe);
+	sub_fromSilbot = n.subscribe("silbotCompletion", 100, Callback_fromSilbot);
 
 	// 3. ROS Publisher setting
-	pub_toTaskExe = n.advertise<std_msgs::String>("json_TaskComp",100);
-	pub_toSilbot = n.advertise<std_msgs::String>("json_SilbotExe",100);
+	pub_toTaskExe = n.advertise<std_msgs::String>("taskCompletion",100);
+	pub_toSilbot = n.advertise<std_msgs::String>("silbotExecution",100);
 
 	ros::spin();
 
@@ -53,7 +53,7 @@ void Callback_fromTaskExe(const std_msgs::String::ConstPtr& jsonEncodedResult_In
 		pub_toSilbot.publish(jsonEncodedResult_Output);
 		std::cout << jsonEncodedResult_Output << std::endl << std::endl;
 		printf("\n############################\n");
-		printf("/json_SilbotExe is Transmitted to Silbot\n");
+		printf("/silbotExecution is Transmitted to Silbot\n");
 	}
 
 }

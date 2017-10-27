@@ -19,10 +19,10 @@ int main(int argc, char **argv){
 	ros::NodeHandle n;
 
 	// 2. ROS Subscriber setting
-	sub = n.subscribe("json_SilbotExe", 100, Callback);
+	sub = n.subscribe("silbotExecution", 100, Callback);
 
 	// 3. ROS Publisher setting
-	pub = n.advertise<std_msgs::String>("json_SilbotComp",100);
+	pub = n.advertise<std_msgs::String>("silbotCompletion",100);
 
 	ros::spin();
 
