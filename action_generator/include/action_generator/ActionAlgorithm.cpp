@@ -50,7 +50,7 @@ void ActionAlgorithm(std_msgs::String& jsonEncodedResult_Output, const std_msgs:
 
 
 	Json::Value input_info;
-	input_info = input_root["1.INFO"];
+	input_info = input_root["INFO"];
 
 
 	std::string module = input_info["MODULE"].asString();
@@ -58,7 +58,7 @@ void ActionAlgorithm(std_msgs::String& jsonEncodedResult_Output, const std_msgs:
 	if (module == "TaskExecution")
 	{
 
-		Json::Value input_task = input_root["2.Task"];
+		Json::Value input_task = input_root["Task"];
 
 		Json::Value output_root;
 			
@@ -68,10 +68,10 @@ void ActionAlgorithm(std_msgs::String& jsonEncodedResult_Output, const std_msgs:
 		output_info["MODULE"] = "KIST_Action";
 		output_info["start"] = 500;
 		output_info["end"] = 900;
-		output_root["1.INFO"] = output_info;
+		output_root["INFO"] = output_info;
 	
 		// 2. taskCompletion
-		output_root["2.Task"] = input_task;
+		output_root["Task"] = input_task;
 	
 		//
 		Json::StyledWriter writer;
@@ -87,7 +87,7 @@ void ActionAlgorithm(std_msgs::String& jsonEncodedResult_Output, const std_msgs:
 	if (module == "Kist_Silbot")
 	{
 
-		Json::Value input_taskcomp = input_root["2.Task_Completion"];
+		Json::Value input_taskcomp = input_root["Task_Completion"];
 
 		Json::Value output_root;
 			
@@ -97,10 +97,10 @@ void ActionAlgorithm(std_msgs::String& jsonEncodedResult_Output, const std_msgs:
 		output_info["MODULE"] = "KIST_Action";
 		output_info["start"] = 500;
 		output_info["end"] = 900;
-		output_root["1.INFO"] = output_info;
+		output_root["INFO"] = output_info;
 	
 		// 2. taskCompletion
-		output_root["2.Task_Completion"] = input_taskcomp;
+		output_root["Task_Completion"] = input_taskcomp;
 	
 		//
 		Json::StyledWriter writer;

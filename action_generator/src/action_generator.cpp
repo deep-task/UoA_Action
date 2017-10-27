@@ -10,7 +10,7 @@
 
 
 // Include algorithm
-#include "../modules/action_generator/ActionAlgorithm.cpp"
+#include <action_generator/ActionAlgorithm.cpp>
 
 void Callback_fromTaskExe(const std_msgs::String::ConstPtr& jsonEncodedResult_Input);
 void Callback_fromSilbot(const std_msgs::String::ConstPtr& jsonEncodedResult_Input);

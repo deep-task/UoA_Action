@@ -10,12 +10,12 @@
 
 
 // Include algorithm
-#include "../modules/action_generator/ActionAlgorithm.cpp"
+#include <action_generator/ActionAlgorithm.cpp>
 
 void Callback_fromTaskExe(const std_msgs::String::ConstPtr& jsonEncodedResult_Input);
 void Callback_fromSilbot(const std_msgs::String::ConstPtr& jsonEncodedResult_Input);
 
-ros::Publisher pub_toTaskExe, pub_toSilbot, pub_toDialog;
+ros::Publisher pub_toTaskExe, pub_toSilbot;
 ros::Subscriber sub_fromTaskExe, sub_fromSilbot;
 
 int main(int argc, char **argv){
@@ -31,7 +31,6 @@ int main(int argc, char **argv){
 	// 3. ROS Publisher setting
 	pub_toTaskExe = n.advertise<std_msgs::String>("json_TaskComp",100);
 	pub_toSilbot = n.advertise<std_msgs::String>("json_SilbotExe",100);
-	pub_toDialog = n.advertise<std_msgs::String>("json_SilbotExe",100);
 
 	ros::spin();
 

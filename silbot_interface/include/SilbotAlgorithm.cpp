@@ -41,8 +41,8 @@ void SilbotAlgorithm(std_msgs::String& jsonEncodedResult_Output, const std_msgs:
 
 	Json::Value input_info;
 	Json::Value input_task;
-	input_info = input_root["1.INFO"];
-	input_task = input_root["2.Task"];
+	input_info = input_root["INFO"];
+	input_task = input_root["Task"];
 
 
 //	std::cout << input_info << std::endl;
@@ -62,14 +62,14 @@ void SilbotAlgorithm(std_msgs::String& jsonEncodedResult_Output, const std_msgs:
 	output_info["MODULE"] = "Kist_Silbot";
 	output_info["start"] = 500;
 	output_info["end"] = 900;
-	output_root["1.INFO"] = output_info;
+	output_root["INFO"] = output_info;
 
 	// 2. taskCompletion
 	Json::Value taskCompletion;
-	taskCompletion["1.TaskNumber"] = input_task["1.TaskNumber"];
-	taskCompletion["2.Behavior"] = input_task["2.Behavior"];
-	taskCompletion["3.Status"] = "Completed";
-	output_root["2.Task_Completion"] = taskCompletion;
+	taskCompletion["TaskNumber"] = input_task["TaskNumber"];
+	taskCompletion["Behavior"] = input_task["Behavior"];
+	taskCompletion["Status"] = "Completed";
+	output_root["Task_Completion"] = taskCompletion;
 
 
 	//
