@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>silbot_interface</name>
+  <name>action_interface</name>
   <version>0.0.0</version>
-  <description>The silbot_interface package</description>
+  <description>The action_interface package</description>
 
   <maintainer email="b.ahn@auckland.ac.nz">Byeong-Kyu Ahn</maintainer>
   <author email="b.ahn@auckland.ac.nz">Byeong-Kyu Ahn</author>
