@@ -1,0 +1,6 @@
+[submodule "social_mind"]
+	path = social_mind
+	url = https://github.com/byeongkyu/social_mind.git
+[submodule "silbot3_shri_render"]
+	path = silbot3_shri_render
+	url = https://github.com/byeongkyu/silbot3_shri_render.git
