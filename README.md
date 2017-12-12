@@ -10,14 +10,29 @@ Affiliation: The University of auckland
 
 ## Installation
 
+These packages are not support binary installation yet.
+
+
 ### Build from Source
+
+        $ git clone --recursive https://github.com/deep-task/UoA_Action.git
+
 
 #### Dependencies
 
+        $ rosdep install --from-paths UoA_Action --ignore-src -r -y
+
+        $ find -name 'requirements.txt' | xargs -L 1 sudo pip install -U -r
+
+
 #### Building
+
+        $ catkin build or cakin_make
 
 
 ## Usage
+
+        $ roslaunch
 
 
 ## Nodes
