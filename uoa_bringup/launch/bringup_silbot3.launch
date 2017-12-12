@@ -1,0 +1,48 @@
+<launch>
+    <arg name="project_path" default="/tmp/shri"/>
+    <arg name="map_name" />
+    <arg name="use_fake_render" default="true" />
+
+    <include file="$(find silbot3_bringup)/launch/bringup.launch" unless="$(arg use_fake_render)">
+        <arg name="with_multimaster" value="false"/>
+        <arg name="map" value="$(arg project_path)/map/$(arg map_name)/my_map.yaml" />
+    </include>
+
+    <include file="$(find social_mind)/launch/bringup.launch" unless="$(arg use_fake_render)">
+        <arg name="project_path" value="$(arg project_path)"/>
+        <arg name="fake_render_speech" value="false" />
+        <arg name="fake_render_gesture" value="false" />
+        <arg name="fake_render_screen" value="false" />
+        <arg name="fake_render_facial_expression" value="false" />
+        <arg name="fake_render_sound" value="true" />
+        <arg name="fake_render_mobility" value="false" />
+    </include>
+
+    <include file="$(find social_mind)/launch/bringup.launch" if="$(arg use_fake_render)">
+        <arg name="project_path" value="$(arg project_path)"/>
+        <arg name="fake_render_speech" value="true" />
+        <arg name="fake_render_gesture" value="true" />
+        <arg name="fake_render_screen" value="true" />
+        <arg name="fake_render_facial_expression" value="true" />
+        <arg name="fake_render_sound" value="true" />
+        <arg name="fake_render_mobility" value="true" />
+    </include>
+
+    <!-- action_interface w/ task manager -->
+    <node name="action_interface" type="action_interface_node.py" pkg="action_interface" output="screen" />
+
+    <!-- Rendering -->
+    <node name="render_speech" type="speech_node.py" pkg="silbot3_render_speech" output="screen" unless="$(arg use_fake_render)"/>
+    <node name="render_screen" type="render_screen.py" pkg="silbot3_render_screen" output="screen" unless="$(arg use_fake_render)">
+        <param name="use_full_screen" value="true" />
+        <param name="resource_path" value="$(arg resource_path)"/>
+    </node>
+    <node name="render_gesture" type="gesture_node.py" pkg="silbot3_render_gesture" output="screen" unless="$(arg use_fake_render)">
+        <param name="motion_file" value="$(find silbot3_render_gesture)/config/motions.yaml"/>
+    </node>
+    <node name="render_expression" type="expression_node.py" pkg="silbot3_render_expression" output="screen" unless="$(arg use_fake_render)"/>
+    <node name="render_gaze" type="render_gaze.py" pkg="silbot3_render_gaze" output="screen" unless="$(arg use_fake_render)"/>
+    <node name="render_mobility" type="render_mobility.py" pkg="silbot3_render_mobility" output="screen" unless="$(arg use_fake_render)">
+        <param name="waypoint_file" value="$(arg project_path)/map/$(arg map_name)/waypoints.yaml"/>
+    </node>
+</launch>
