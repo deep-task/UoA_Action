@@ -32,10 +32,61 @@ These packages are not support binary installation yet.
 
 ## Usage
 
-        $ roslaunch
+        - Use fake renderer without real robots
+
+        $ roslaunch uoa_bringup bringup_silbot3.launch project_path:=<your-project-path> map_name:=<map-name> use_fake_render:=true
+
+        - Use real robots (silbot3)
+
+        $ roslaunch uoa_bringup bringup_silbot3.launch project_path:=<your-project-path> map_name:=<map-name> use_fake_render:=false
 
 
 ## Nodes
+
+UoA_Action subscribe topics /taskExecution [std_msgs/String], /perceptionResult [std_msgs/String] and publish topic /taskComplition [std_msgs/String].
+
+Each topic has json format.
+
+
+### /taskExecution
+
+        {
+            "INFO": {
+                "MODULE": "UOS",
+                "end": 800,
+                "start": 700
+            },
+
+            "Task": {
+                "TaskNumber": "1",
+                "Behavior": "moving",
+                "Robot_Dialog": "",
+                "Human_Info": {
+                    "Age": 20,
+                    "Id": 1,
+                    "Name": "KJH",
+                    "X_Position": 0,
+                    "Y_Position": 1,
+                    "Z_Position": 2
+                }
+            }
+        }
+
+
+### /taskComplition
+
+        {
+            "INFO": {
+                "MODULE": "UOA",
+                "end": 1500,
+                "start": 1300
+            },
+            "Task_Completion": {
+                "TaskNumber": "2",
+                "Behavior": "greeting",
+                "Status": "Completed"
+            }
+        }
 
 
 ## Bug & Feature Requests
