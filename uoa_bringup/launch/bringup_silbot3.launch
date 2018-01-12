@@ -2,6 +2,7 @@
     <arg name="project_path" default="/tmp/shri"/>
     <arg name="map_name" />
     <arg name="use_fake_render" default="true" />
+    <arg name="resource_path" default="" />
 
     <include file="$(find silbot3_bringup)/launch/bringup.launch" unless="$(arg use_fake_render)">
         <arg name="with_multimaster" value="false"/>
@@ -12,7 +13,7 @@
         <arg name="project_path" value="$(arg project_path)"/>
         <arg name="fake_render_speech" value="false" />
         <arg name="fake_render_gesture" value="false" />
-        <arg name="fake_render_screen" value="false" />
+        <arg name="fake_render_screen" value="true" />
         <arg name="fake_render_facial_expression" value="false" />
         <arg name="fake_render_sound" value="true" />
         <arg name="fake_render_mobility" value="false" />
@@ -33,10 +34,11 @@
 
     <!-- Rendering -->
     <node name="render_speech" type="speech_node.py" pkg="silbot3_render_speech" output="screen" unless="$(arg use_fake_render)"/>
-    <node name="render_screen" type="render_screen.py" pkg="silbot3_render_screen" output="screen" unless="$(arg use_fake_render)">
+    <!-- <node name="render_screen" type="render_screen.py" pkg="silbot3_render_screen" output="screen" unless="$(arg use_fake_render)">
         <param name="use_full_screen" value="true" />
         <param name="resource_path" value="$(arg resource_path)"/>
     </node>
+    -->
     <node name="render_gesture" type="gesture_node.py" pkg="silbot3_render_gesture" output="screen" unless="$(arg use_fake_render)">
         <param name="motion_file" value="$(find silbot3_render_gesture)/config/motions.yaml"/>
     </node>

@@ -31,20 +31,42 @@ class ActionInterfaceNode:
 
     def handle_task_execution(self, msg):
         rospy.loginfo('-- task_execution received --')
-
+ 
+        recv_data = json.loads(msg.data)
+        action_data = recv_data['robot_action']
+        action_id = action_data['id']
+        
         req_task = Reply()
         req_task.header.stamp = rospy.Time.now()
-        req_task.reply = 'Hello! Nice to meet you. <br=0> Hello Again.'
+
+        if action_data['behavior'] == 'action':
+            req_task.reply = '<sm=tag:%s>'%action_data['sm'] + action_data['dialog']
 
         self.silbot_task_complition = False
-        rospy.sleep(0.2)
+        rospy.sleep(0.1)
         self.silbot_task_requested = True
         self.pub_silbot_execution.publish(req_task)
         while not rospy.is_shutdown() and not self.silbot_task_complition:
             rospy.sleep(0.1)
 
+        current_time = rospy.get_rostime()
+
+        jsonSTTFrame = {
+            "header": {
+            "timestamp": "%i.%i" % (current_time.secs, current_time.nsecs),
+            "source": "UOA",
+            "target": ["UOS"],
+            "content": ["robot_action"]
+            },
+        "robot_action": {
+            "id": int(action_id),
+            "behavior": "action",
+            "result": "completion"
+            } 
+        }
+
         rospy.loginfo('-- task_execution completed --')
-        self.pub_task_completed.publish(json.dumps({}))
+        self.pub_task_completed.publish(json.dumps(jsonSTTFrame))
         self.silbot_task_requested = False
 
 
