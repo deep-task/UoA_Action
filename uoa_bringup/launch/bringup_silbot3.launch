@@ -7,6 +7,7 @@
     <include file="$(find silbot3_bringup)/launch/bringup.launch" unless="$(arg use_fake_render)">
         <arg name="with_multimaster" value="false"/>
         <arg name="map" value="$(arg project_path)/map/$(arg map_name)/my_map.yaml" />
+        <arg name="use_urg" value="true" />
     </include>
 
     <include file="$(find social_mind)/launch/bringup.launch" unless="$(arg use_fake_render)">
@@ -17,6 +18,7 @@
         <arg name="fake_render_facial_expression" value="false" />
         <arg name="fake_render_sound" value="true" />
         <arg name="fake_render_mobility" value="false" />
+        <arg name="gaze_default_height" value="1.0" />
     </include>
 
     <include file="$(find social_mind)/launch/bringup.launch" if="$(arg use_fake_render)">
@@ -46,5 +48,10 @@
     <node name="render_gaze" type="render_gaze.py" pkg="silbot3_render_gaze" output="screen" unless="$(arg use_fake_render)"/>
     <node name="render_mobility" type="render_mobility.py" pkg="silbot3_render_mobility" output="screen" unless="$(arg use_fake_render)">
         <param name="waypoint_file" value="$(arg project_path)/map/$(arg map_name)/waypoints.yaml"/>
+    </node>
+
+    <!-- Perceptions -->
+    <node name="person_detection" type="person_detection.py" pkg="silbot3_shri_perception" output="screen">
+        <param name="config_file" value="$(find silbot3_shri_perception)/config/person_detection.yaml" />
     </node>
 </launch>

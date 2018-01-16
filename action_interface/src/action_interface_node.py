@@ -12,7 +12,9 @@ class ActionInterfaceNode:
 
         rospy.Subscriber('/perceptionResult', String, self.handle_perception_result)
         rospy.Subscriber('/taskExecution', String, self.handle_task_execution)
-        self.pub_task_completed = rospy.Publisher('/taskComplition', String, queue_size=10)
+        self.pub_task_completed = rospy.Publisher('/taskCompletion', String, queue_size=10)
+
+        self.pub_gaze_focusing = rospy.Publisher('gaze_focusing', String, queue_size=10)
 
         self.silbot_task_requested = False
         rospy.Subscriber('/scene_queue_empty', String, self.handle_silbot_complition)
@@ -21,9 +23,7 @@ class ActionInterfaceNode:
         rospy.loginfo('%s initialized...'%rospy.get_name())
 
     def handle_perception_result(self, msg):
-        rospy.loginfo('-- perception_result received --')
-        rospy.loginfo(msg)
-        rospy.loginfo('-'*20)
+        pass
 
     def handle_silbot_complition(self, msg):
         if self.silbot_task_requested:
@@ -38,6 +38,36 @@ class ActionInterfaceNode:
         
         req_task = Reply()
         req_task.header.stamp = rospy.Time.now()
+
+        if 'focusing' in action_data['behavior']:
+            data = action_data['behavior'].split(':')
+            pub_target = String()
+            if data[1] != 'end':
+                pub_target.data = 'persons:' + data[1]
+            else:
+                pub_target.data = ''
+            self.pub_gaze_focusing.publish(pub_target)
+
+            rospy.sleep(0.5)
+
+            current_time = rospy.get_rostime()
+            jsonSTTFrame = {
+                "header": {
+                "timestamp": "%i.%i" % (current_time.secs, current_time.nsecs),
+                "source": "UOA",
+                "target": ["UOS"],
+                "content": ["robot_action"]
+                },
+            "robot_action": {
+                "id": int(action_id),
+                "behavior": "action",
+                "result": "completion"
+                }
+            }
+
+            rospy.loginfo('-- task_execution completed --')
+            self.pub_task_completed.publish(json.dumps(jsonSTTFrame))
+            return
 
         if action_data['behavior'] == 'action':
             req_task.reply = '<sm=tag:%s>'%action_data['sm'] + action_data['dialog']

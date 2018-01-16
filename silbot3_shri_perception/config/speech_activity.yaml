@@ -1,0 +1,8 @@
+speech_activity:
+    target_memory: 'social_events_memory'
+    events: ['start_of_speech', 'end_of_speech', 'silency_detected']
+    callback_config:
+        start_of_speech: ['std_msgs.msg/Empty', 'handle_start_speech']
+        end_of_speech: ['std_msgs.msg/Empty', 'handle_end_speech']
+        silency_detected: ['std_msgs.msg/Empty', 'handle_silency_detected']
+    data: []
