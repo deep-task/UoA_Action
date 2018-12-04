@@ -145,25 +145,12 @@ class ActionInterfaceNode:
         self.silbot_task_requested = True
         self.pub_silbot_execution.publish(req_task)
 
+        # !!! todo unblock the following lines before testing silbot platform
         # block until requested action will be done
         # while not rospy.is_shutdown() and not self.silbot_task_complition:
         #     rospy.sleep(0.1)
 
-        current_time = rospy.get_rostime()
-
-        jsonSTTFrame = {
-            "header": {
-            "timestamp": "%i.%i" % (current_time.secs, current_time.nsecs),
-            "source": "UOA",
-            "target": ["UOS"],
-            "content": ["robot_action"]
-            },
-        "robot_action": {
-            "id": int(action_id),
-            "behavior": "action",
-            "result": "completion"
-            } 
-        }
+        jsonSTTFrame = self.create_complete_jsonstr(action_id, "action")
 
         rospy.loginfo('-- task_execution completed --')
         self.pub_task_completed.publish(json.dumps(jsonSTTFrame))
