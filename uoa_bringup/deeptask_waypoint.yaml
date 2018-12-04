@@ -1,0 +1,4 @@
+# WayPoint: [x, y, rot]
+home: [-0.26, -1.15, 0.91]
+signboard_left_side: [3.099, -1.35, 0.16]
+signboard_right_side: [1.26, -1.09, 0.99]
