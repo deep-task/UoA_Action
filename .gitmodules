@@ -4,3 +4,18 @@
 [submodule "social_behavior"]
 	path = social_behavior
 	url = git@github.com:jlim262/social_behavior.git
+[submodule "2nd_year_evaluation/evaluation_shri_ros"]
+	path = 2nd_year_evaluation/evaluation_shri_ros
+	url = git@github.com:jlim262/evaluation_shri_ros.git
+[submodule "2nd_year_evaluation/nao_v5_shri_modules"]
+	path = 2nd_year_evaluation/nao_v5_shri_modules
+	url = git@github.com:jlim262/nao_v5_shri_modules.git
+[submodule "2nd_year_evaluation/google_cloud_speech"]
+	path = 2nd_year_evaluation/google_cloud_speech
+	url = git@github.com:jlim262/google_cloud_speech.git
+[submodule "2nd_year_evaluation/polly_speech"]
+	path = 2nd_year_evaluation/polly_speech
+	url = git@github.com:jlim262/polly_speech.git
+[submodule "2nd_year_evaluation/dialogflow_dialog"]
+	path = 2nd_year_evaluation/dialogflow_dialog
+	url = git@github.com:jlim262/dialogflow_dialog.git
