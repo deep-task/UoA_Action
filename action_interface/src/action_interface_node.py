@@ -30,6 +30,24 @@ class ActionInterfaceNode:
         if self.silbot_task_requested:
             self.silbot_task_complition = True
 
+    def create_complete_jsonstr(self, action_id, behavior):
+        current_time = rospy.get_rostime()
+        jsonSTTFrame = {
+            "header": {
+            "timestamp": "%i.%i" % (current_time.secs, current_time.nsecs),
+            "source": "UOA",
+            "target": ["UOS"],
+            "content": ["robot_action"]
+            },
+        "robot_action": {
+            "id": int(action_id),
+            "behavior": behavior,
+            "result": "completion"
+            }
+        }
+        return jsonSTTFrame
+        
+
     def handle_task_execution(self, msg):
         rospy.loginfo(msg)
         recv_data = json.loads(msg.data)
@@ -65,26 +83,23 @@ class ActionInterfaceNode:
 
             rospy.sleep(0.5)
 
-            # todo: publish a topic notifying execution of task is done
-            # self.publish_taskcompletion('UOS', '', )
-
-            current_time = rospy.get_rostime()
-            jsonSTTFrame = {
-                "header": {
-                "timestamp": "%i.%i" % (current_time.secs, current_time.nsecs),
-                "source": "UOA",
-                "target": ["UOS"],
-                "content": ["robot_action"]
-                },
-            "robot_action": {
-                "id": int(action_id),
-                "behavior": action_data['behavior'],
-                "result": "completion"
-                }
-            }
-
-            rospy.loginfo('-- task_execution completed --')
+            # current_time = rospy.get_rostime()
+            # jsonSTTFrame = {
+            #     "header": {
+            #     "timestamp": "%i.%i" % (current_time.secs, current_time.nsecs),
+            #     "source": "UOA",
+            #     "target": ["UOS"],
+            #     "content": ["robot_action"]
+            #     },
+            # "robot_action": {
+            #     "id": int(action_id),
+            #     "behavior": action_data['behavior'],
+            #     "result": "completion"
+            #     }
+            # }
+            jsonSTTFrame = self.create_complete_jsonstr(action_id, action_data['behavior'])
             self.pub_task_completed.publish(json.dumps(jsonSTTFrame))
+            rospy.loginfo('-- task_execution completed --')
             return
         elif 'head_toss_gaze' in action_data['behavior']:
             # gaze a person and back to neutral
@@ -106,20 +121,7 @@ class ActionInterfaceNode:
                 self.pub_gaze_focusing.publish(pub_target)
                 rospy.loginfo('published topic to stop gazing(%s)' % action_id )
 
-                current_time = rospy.get_rostime()
-                jsonSTTFrame = {
-                    "header": {
-                    "timestamp": "%i.%i" % (current_time.secs, current_time.nsecs),
-                    "source": "UOA",
-                    "target": ["UOS"],
-                    "content": ["robot_action"]
-                    },
-                "robot_action": {
-                    "id": int(action_id),
-                    "behavior": action_data['behavior'],  
-                    "result": "completion"
-                    }
-                }
+                jsonSTTFrame = self.create_complete_jsonstr(action_id, action_data['behavior'])
                 rospy.loginfo(jsonSTTFrame)
                 self.pub_task_completed.publish(json.dumps(jsonSTTFrame))
 
