@@ -31,6 +31,7 @@ class ActionInterfaceNode:
             self.silbot_task_complition = True
 
     def handle_task_execution(self, msg):
+        rospy.loginfo(msg)
         recv_data = json.loads(msg.data)
 
         # filter json msg
@@ -55,7 +56,6 @@ class ActionInterfaceNode:
 
             data = action_data['behavior'].split(':')
             encode_data = u' '.join(data).encode('utf-8')
-            rospy.loginfo(encode_data)
             pub_target = String()
             if data[1] != 'end':
                 pub_target.data = 'persons:' + data[1]
@@ -78,7 +78,7 @@ class ActionInterfaceNode:
                 },
             "robot_action": {
                 "id": int(action_id),
-                "behavior": "action",
+                "behavior": action_data['behavior'],
                 "result": "completion"
                 }
             }
@@ -86,10 +86,47 @@ class ActionInterfaceNode:
             rospy.loginfo('-- task_execution completed --')
             self.pub_task_completed.publish(json.dumps(jsonSTTFrame))
             return
-        else if 'head_toss_gaze' in action_data['behavior']:
+        elif 'head_toss_gaze' in action_data['behavior']:
             # gaze a person and back to neutral
             rospy.loginfo("received head_toss_gaze topic")
-        else if 'going_back_to_stand_by_place' in action_data['behavior']:
+
+            data = action_data['behavior'].split(':')
+            encode_data = u' '.join(data).encode('utf-8')
+            pub_target = String()
+            if data[1] != 'end':
+                pub_target.data = 'persons:' + data[1]
+            else:
+                pub_target.data = ''
+            self.pub_gaze_focusing.publish(pub_target)
+
+            rospy.sleep(0.5)
+
+            def stop_gazing(event):            
+                pub_target.data = ''
+                self.pub_gaze_focusing.publish(pub_target)
+                rospy.loginfo('published topic to stop gazing(%s)' % action_id )
+
+                current_time = rospy.get_rostime()
+                jsonSTTFrame = {
+                    "header": {
+                    "timestamp": "%i.%i" % (current_time.secs, current_time.nsecs),
+                    "source": "UOA",
+                    "target": ["UOS"],
+                    "content": ["robot_action"]
+                    },
+                "robot_action": {
+                    "id": int(action_id),
+                    "behavior": action_data['behavior'],  
+                    "result": "completion"
+                    }
+                }
+                rospy.loginfo(jsonSTTFrame)
+                self.pub_task_completed.publish(json.dumps(jsonSTTFrame))
+
+            rospy.Timer(rospy.Duration(3), stop_gazing, oneshot=True)
+            return
+
+        elif 'going_back_to_stand_by_place' in action_data['behavior']:
             rospy.loginfo("received going_back_to_stand_by_place topic")
 
             # parse xyzw
