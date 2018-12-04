@@ -131,12 +131,11 @@ class ActionInterfaceNode:
         elif 'going_back_to_stand_by_place' in action_data['behavior']:
             rospy.loginfo("received going_back_to_stand_by_place topic")
 
-            # parse xyzw
-        
-
-            
-
-
+            data = action_data['behavior'].split(':')
+            req_task.reply = '<mobility=%s>'%(data)
+            self.pub_silbot_execution.publish(req_task)
+            return
+             
         if action_data['behavior'] == 'action':
             req_task.reply = '<sm=tag:%s>'%action_data['sm'] + action_data['dialog']
 
