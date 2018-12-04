@@ -3,6 +3,7 @@
 
 import rospy
 import json
+import pdb
 from std_msgs.msg import String
 from mind_msgs.msg import Reply
 
@@ -11,14 +12,14 @@ class ActionInterfaceNode:
         self.silbot_task_complition = False
 
         rospy.Subscriber('/perceptionResult', String, self.handle_perception_result)
-        rospy.Subscriber('/taskExecution', String, self.handle_task_execution)
+        rospy.Subscriber('/taskRequest', String, self.handle_task_execution)
         self.pub_task_completed = rospy.Publisher('/taskCompletion', String, queue_size=10)
 
         self.pub_gaze_focusing = rospy.Publisher('gaze_focusing', String, queue_size=10)
 
         self.silbot_task_requested = False
         rospy.Subscriber('/scene_queue_empty', String, self.handle_silbot_complition)
-        self.pub_silbot_execution = rospy.Publisher('/reply', Reply, queue_size=10)
+        self.pub_silbot_execution = rospy.Publisher('/reply_deprecated', Reply, queue_size=10)
 
         rospy.loginfo('%s initialized...'%rospy.get_name())
 
@@ -30,17 +31,31 @@ class ActionInterfaceNode:
             self.silbot_task_complition = True
 
     def handle_task_execution(self, msg):
-        rospy.loginfo('-- task_execution received --')
- 
         recv_data = json.loads(msg.data)
+
+        # filter json msg
+        if 'uoa' not in [x.lower() for x in recv_data['header']['target']]:
+            return 
+        if 'robot_action' not in recv_data:
+            rospy.logerror('message is for uoa but there is no robot_action key')
+            return
+
+        rospy.loginfo('!!-- task_execution received --')
+
         action_data = recv_data['robot_action']
         action_id = action_data['id']
         
         req_task = Reply()
         req_task.header.stamp = rospy.Time.now()
+        
 
         if 'focusing' in action_data['behavior']:
+            
+            rospy.loginfo(action_data['behavior'].encode('utf-8'))
+
             data = action_data['behavior'].split(':')
+            encode_data = u' '.join(data).encode('utf-8')
+            rospy.loginfo(encode_data)
             pub_target = String()
             if data[1] != 'end':
                 pub_target.data = 'persons:' + data[1]
@@ -49,6 +64,9 @@ class ActionInterfaceNode:
             self.pub_gaze_focusing.publish(pub_target)
 
             rospy.sleep(0.5)
+
+            # todo: publish a topic notifying execution of task is done
+            # self.publish_taskcompletion('UOS', '', )
 
             current_time = rospy.get_rostime()
             jsonSTTFrame = {
@@ -68,6 +86,17 @@ class ActionInterfaceNode:
             rospy.loginfo('-- task_execution completed --')
             self.pub_task_completed.publish(json.dumps(jsonSTTFrame))
             return
+        else if 'head_toss_gaze' in action_data['behavior']:
+            # gaze a person and back to neutral
+            rospy.loginfo("received head_toss_gaze topic")
+        else if 'going_back_to_stand_by_place' in action_data['behavior']:
+            rospy.loginfo("received going_back_to_stand_by_place topic")
+
+            # parse xyzw
+        
+
+            
+
 
         if action_data['behavior'] == 'action':
             req_task.reply = '<sm=tag:%s>'%action_data['sm'] + action_data['dialog']
@@ -76,8 +105,10 @@ class ActionInterfaceNode:
         rospy.sleep(0.1)
         self.silbot_task_requested = True
         self.pub_silbot_execution.publish(req_task)
-        while not rospy.is_shutdown() and not self.silbot_task_complition:
-            rospy.sleep(0.1)
+
+        # block until requested action will be done
+        # while not rospy.is_shutdown() and not self.silbot_task_complition:
+        #     rospy.sleep(0.1)
 
         current_time = rospy.get_rostime()
 
