@@ -10,7 +10,7 @@
         <arg name="use_urg" value="true" />
     </include>
 
-    <include file="$(find social_behavior)/launch/bringup.launch" unless="$(arg use_fake_render)">
+    <include file="$(find social_mind)/launch/bringup.launch" unless="$(arg use_fake_render)">
         <arg name="project_path" value="$(arg project_path)"/>
         <arg name="fake_render_speech" value="false" />
         <arg name="fake_render_gesture" value="false" />
@@ -21,7 +21,7 @@
         <arg name="gaze_default_height" value="1.0" />
     </include>
 
-    <include file="$(find social_behavior)/launch/bringup.launch" if="$(arg use_fake_render)">
+    <include file="$(find social_mind)/launch/bringup.launch" if="$(arg use_fake_render)">
         <arg name="project_path" value="$(arg project_path)"/>
         <arg name="fake_render_speech" value="true" />
         <arg name="fake_render_gesture" value="true" />

@@ -19,7 +19,7 @@ class ActionInterfaceNode:
 
         self.silbot_task_requested = False
         rospy.Subscriber('/scene_queue_empty', String, self.handle_silbot_complition)
-        self.pub_silbot_execution = rospy.Publisher('/reply', Reply, queue_size=10)
+        self.pub_silbot_execution = rospy.Publisher('/reply_deprecated', Reply, queue_size=10)
 
         rospy.loginfo('%s initialized...'%rospy.get_name())
 
