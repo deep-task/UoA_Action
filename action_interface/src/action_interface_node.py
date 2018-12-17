@@ -19,7 +19,7 @@ class ActionInterfaceNode:
 
         self.silbot_task_requested = False
         rospy.Subscriber('/scene_queue_empty', String, self.handle_silbot_complition)
-        self.pub_silbot_execution = rospy.Publisher('/reply_deprecated', Reply, queue_size=10)
+        self.pub_silbot_execution = rospy.Publisher('/reply', Reply, queue_size=10)
 
         rospy.loginfo('%s initialized...'%rospy.get_name())
 
@@ -137,6 +137,7 @@ class ActionInterfaceNode:
             return
              
         if action_data['behavior'] == 'action':
+            rospy.loginfo("action behavior recieved")
             req_task.reply = '<sm=tag:%s>'%action_data['sm'] + action_data['dialog']
 
         self.silbot_task_complition = False
@@ -146,8 +147,8 @@ class ActionInterfaceNode:
 
         # !!! todo unblock the following lines before testing silbot platform
         # block until requested action will be done
-        # while not rospy.is_shutdown() and not self.silbot_task_complition:
-        #     rospy.sleep(0.1)
+        while not rospy.is_shutdown() and not self.silbot_task_complition:
+	    rospy.sleep(0.1)
 
         jsonSTTFrame = self.create_complete_jsonstr(action_id, "action")
 
