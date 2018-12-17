@@ -148,7 +148,7 @@ class ActionInterfaceNode:
         # !!! todo unblock the following lines before testing silbot platform
         # block until requested action will be done
         while not rospy.is_shutdown() and not self.silbot_task_complition:
-	    rospy.sleep(0.1)
+            rospy.sleep(0.1)
 
         jsonSTTFrame = self.create_complete_jsonstr(action_id, "action")
 
