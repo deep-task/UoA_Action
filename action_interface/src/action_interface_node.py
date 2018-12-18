@@ -67,8 +67,12 @@ class ActionInterfaceNode:
         req_task = Reply()
         req_task.header.stamp = rospy.Time.now()
         
+        task = action_data['behavior']
+        if ':' in task:
+            task = task.split(':')[0]
+        
 
-        if 'focusing' in action_data['behavior']:
+        if task in ['focusing', 'gaze', 'listen_to_human']:
             
             rospy.loginfo(action_data['behavior'].encode('utf-8'))
 
@@ -76,32 +80,18 @@ class ActionInterfaceNode:
             encode_data = u' '.join(data).encode('utf-8')
             pub_target = String()
             if data[1] != 'end':
-                pub_target.data = 'persons:' + data[1]
+                pub_target.data = 'persons:' + action_data['user']
             else:
                 pub_target.data = ''
             self.pub_gaze_focusing.publish(pub_target)
 
             rospy.sleep(0.5)
 
-            # current_time = rospy.get_rostime()
-            # jsonSTTFrame = {
-            #     "header": {
-            #     "timestamp": "%i.%i" % (current_time.secs, current_time.nsecs),
-            #     "source": "UOA",
-            #     "target": ["UOS"],
-            #     "content": ["robot_action"]
-            #     },
-            # "robot_action": {
-            #     "id": int(action_id),
-            #     "behavior": action_data['behavior'],
-            #     "result": "completion"
-            #     }
-            # }
             jsonSTTFrame = self.create_complete_jsonstr(action_id, action_data['behavior'])
             self.pub_task_completed.publish(json.dumps(jsonSTTFrame))
             rospy.loginfo('-- task_execution completed --')
             return
-        elif 'head_toss_gaze' in action_data['behavior']:
+        elif task in ['head_toss_gaze']:
             # gaze a person and back to neutral
             rospy.loginfo("received head_toss_gaze topic")
 
@@ -109,7 +99,7 @@ class ActionInterfaceNode:
             encode_data = u' '.join(data).encode('utf-8')
             pub_target = String()
             if data[1] != 'end':
-                pub_target.data = 'persons:' + data[1]
+                pub_target.data = 'persons:' + action_data['user']
             else:
                 pub_target.data = ''
             self.pub_gaze_focusing.publish(pub_target)
@@ -128,24 +118,24 @@ class ActionInterfaceNode:
             rospy.Timer(rospy.Duration(3), stop_gazing, oneshot=True)
             return
 
-        elif 'going_back_to_stand_by_place' in action_data['behavior']:
-            rospy.loginfo("received going_back_to_stand_by_place topic")
-
+        elif task in ['going_back_to_stand_by_place', 'approach_to_the_user']:
             data = action_data['behavior'].split(':')
             req_task.reply = '<mobility=%s>'%(data)
             self.pub_silbot_execution.publish(req_task)
             return
-             
-        if action_data['behavior'] == 'action':
-            rospy.loginfo("action behavior recieved")
+        elif task in ['saying_hello', 'initiation_of_conversation', 'continuation_of_conversation', 'termination_of_conversation', 'elicit_interest', 'saying_good_bye']:
+            req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] 
+        elif task in ['action']:
             req_task.reply = '<sm=tag:%s>'%action_data['sm'] + action_data['dialog']
+        else:
+            rospy.info('task(%s) is not defined' % task)
+            return
 
         self.silbot_task_complition = False
         rospy.sleep(0.1)
         self.silbot_task_requested = True
         self.pub_silbot_execution.publish(req_task)
 
-        # !!! todo unblock the following lines before testing silbot platform
         # block until requested action will be done
         while not rospy.is_shutdown() and not self.silbot_task_complition:
             rospy.sleep(0.1)
