@@ -95,13 +95,13 @@ class ActionInterfaceNode:
             # gaze a person and back to neutral
             rospy.loginfo("received head_toss_gaze topic")
 
-            data = action_data['behavior'].split(':')
-            encode_data = u' '.join(data).encode('utf-8')
+            #data = action_data['behavior'].split(':')
+            #encode_data = u' '.join(data).encode('utf-8')
             pub_target = String()
-            if data[1] != 'end':
-                pub_target.data = 'persons:' + action_data['user']
-            else:
-                pub_target.data = ''
+            #if data[1] != 'end':
+            pub_target.data = 'persons:' + action_data['user']
+            #else:
+            #    pub_target.data = ''
             self.pub_gaze_focusing.publish(pub_target)
 
             rospy.sleep(0.5)
