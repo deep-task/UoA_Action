@@ -12,7 +12,7 @@ class ActionInterfaceNode:
         self.silbot_task_complition = False
 
         rospy.Subscriber('/perceptionResult', String, self.handle_perception_result)
-        rospy.Subscriber('/taskRequest', String, self.handle_task_execution)
+        rospy.Subscriber('/taskExecution', String, self.handle_task_execution)
         self.pub_task_completed = rospy.Publisher('/taskCompletion', String, queue_size=10)
 
         self.pub_gaze_focusing = rospy.Publisher('gaze_focusing', String, queue_size=10)
