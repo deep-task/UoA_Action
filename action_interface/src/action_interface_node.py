@@ -120,7 +120,7 @@ class ActionInterfaceNode:
 
         elif task in ['going_back_to_stand_by_place', 'approach_to_the_user']:
             data = action_data['behavior'].split(':')
-            req_task.reply = '<mobility=%s>'%(data)
+            req_task.reply = '<mobility=move:%s>'%(data[1])
             self.pub_silbot_execution.publish(req_task)
             return
         elif task in ['saying_hello', 'initiation_of_conversation', 'continuation_of_conversation', 'termination_of_conversation', 'elicit_interest', 'saying_good_bye']:
