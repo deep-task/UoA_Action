@@ -12,7 +12,7 @@ class ActionInterfaceNode:
         self.silbot_task_complition = False
 
         rospy.Subscriber('/perceptionResult', String, self.handle_perception_result)
-        rospy.Subscriber('/taskRequest', String, self.handle_task_execution)
+        rospy.Subscriber('/taskExecution', String, self.handle_task_execution)
         self.pub_task_completed = rospy.Publisher('/taskCompletion', String, queue_size=10)
 
         self.pub_gaze_focusing = rospy.Publisher('gaze_focusing', String, queue_size=10)
@@ -95,13 +95,13 @@ class ActionInterfaceNode:
             # gaze a person and back to neutral
             rospy.loginfo("received head_toss_gaze topic")
 
-            data = action_data['behavior'].split(':')
-            encode_data = u' '.join(data).encode('utf-8')
+            #data = action_data['behavior'].split(':')
+            #encode_data = u' '.join(data).encode('utf-8')
             pub_target = String()
-            if data[1] != 'end':
-                pub_target.data = 'persons:' + action_data['user']
-            else:
-                pub_target.data = ''
+            #if data[1] != 'end':
+            pub_target.data = 'persons:' + action_data['user']
+            #else:
+            #    pub_target.data = ''
             self.pub_gaze_focusing.publish(pub_target)
 
             rospy.sleep(0.5)
@@ -120,7 +120,7 @@ class ActionInterfaceNode:
 
         elif task in ['going_back_to_stand_by_place', 'approach_to_the_user']:
             data = action_data['behavior'].split(':')
-            req_task.reply = '<mobility=%s>'%(data)
+            req_task.reply = '<mobility=move:%s>'%(data[1])
             self.pub_silbot_execution.publish(req_task)
             return
         elif task in ['saying_hello', 'initiation_of_conversation', 'continuation_of_conversation', 'termination_of_conversation', 'elicit_interest', 'saying_good_bye']:

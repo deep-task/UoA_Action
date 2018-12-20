@@ -2,7 +2,7 @@ person_detection:
     target_memory: 'social_events_memory'
     events: []
     callback_config:
-        perceptionResult: ['std_msgs.msg/String', 'handle_person_detected']
+        recognitionResult: ['std_msgs.msg/String', 'handle_person_detected']
     data:
         count:         0
 
