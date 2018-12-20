@@ -1,0 +1,32 @@
+{
+  "id": "dde90de4-f23b-4e32-b5d5-a3865d7360d5",
+  "name": "GoodbyeIntent",
+  "auto": true,
+  "contexts": [
+    "get-name",
+    "request-bathroom"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "goodbye",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "I hope you have a nice day, #get-name.given-name."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1533538659,
+  "fallbackIntent": false,
+  "events": []
+}

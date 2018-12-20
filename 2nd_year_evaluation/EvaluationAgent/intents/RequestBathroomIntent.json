@@ -1,0 +1,57 @@
+{
+  "id": "2e179da5-682c-458a-bb26-9b6f65439fc8",
+  "name": "RequestBathroomIntent",
+  "auto": true,
+  "contexts": [
+    "get-name",
+    "done-checkin"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "request_bathroom",
+      "affectedContexts": [
+        {
+          "name": "get-name",
+          "parameters": {},
+          "lifespan": 5
+        },
+        {
+          "name": "request-bathroom",
+          "parameters": {},
+          "lifespan": 5
+        },
+        {
+          "name": "done-checkin",
+          "parameters": {},
+          "lifespan": 5
+        }
+      ],
+      "parameters": [
+        {
+          "id": "3597b22f-5935-4f8a-bf5d-4bc6b31b8c37",
+          "required": false,
+          "dataType": "@DoctorNameEntity",
+          "name": "DoctorNameEntity",
+          "value": "$DoctorNameEntity",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "%pointing\u003dobjects:door% certainly, the bathroom is located down the hall, second door on the right."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1534915964,
+  "fallbackIntent": false,
+  "events": []
+}

@@ -1,0 +1,54 @@
+{
+  "id": "001aec8a-7836-4bab-b718-c49982550580",
+  "name": "GetDoctorNameKnownIntent",
+  "auto": true,
+  "contexts": [
+    "get-name",
+    "get-appointment-time"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [
+        {
+          "name": "get-name",
+          "parameters": {},
+          "lifespan": 5
+        },
+        {
+          "name": "done-checkin",
+          "parameters": {},
+          "lifespan": 5
+        }
+      ],
+      "parameters": [
+        {
+          "id": "061b480e-f2be-4a4e-b1d4-5ad632561ed4",
+          "required": false,
+          "dataType": "@DoctorNameEntity",
+          "name": "doctor-name",
+          "value": "$doctor-name",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": [
+            "ok. thanks #get-name.given-name. I have checked you in. is there anything elese I can help you with?",
+            "thank you #get-name.given-name. I have checked you in. is there anything elese I can help you with?"
+          ]
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1530070023,
+  "fallbackIntent": false,
+  "events": []
+}

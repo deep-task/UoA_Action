@@ -1,0 +1,38 @@
+[
+  {
+    "id": "6aa676e5-5ec8-4521-83ef-76144f1deb54",
+    "data": [
+      {
+        "text": "I need to check in",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1530066996
+  },
+  {
+    "id": "5f941cad-e03e-4db2-80a3-add4944067d7",
+    "data": [
+      {
+        "text": "I need to check in for my doctor\u0027s appointment",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1530066996
+  },
+  {
+    "id": "2867fbcd-3dff-411e-bb22-9e99ff7bb719",
+    "data": [
+      {
+        "text": "yes I also need to check in for my doctor\u0027s appointment",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1530066996
+  }
+]

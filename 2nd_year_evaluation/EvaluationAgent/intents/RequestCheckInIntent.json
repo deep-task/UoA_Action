@@ -1,0 +1,42 @@
+{
+  "id": "a262f6fd-3be3-480a-9bf7-53c3daad12fb",
+  "name": "RequestCheckInIntent",
+  "auto": true,
+  "contexts": [
+    "get-name",
+    "get-address"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [
+        {
+          "name": "get-name",
+          "parameters": {},
+          "lifespan": 5
+        },
+        {
+          "name": "request-checkin",
+          "parameters": {},
+          "lifespan": 5
+        }
+      ],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "ok #get-name.given-name, what time is your appointment?"
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1530069900,
+  "fallbackIntent": false,
+  "events": []
+}

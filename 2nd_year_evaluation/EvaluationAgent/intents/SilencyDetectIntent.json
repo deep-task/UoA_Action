@@ -1,0 +1,35 @@
+{
+  "id": "316aef6a-213a-4b6e-9245-63d9f6b0b3dd",
+  "name": "SilencyDetectIntent",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": [
+            "If you want to continue this evaluation, just say to me when my eye colour become to light blue.",
+            "I am sorry I can\u0027t listen your voices, please say again."
+          ]
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1535067350,
+  "fallbackIntent": false,
+  "events": [
+    {
+      "name": "social_events_silency_detected"
+    }
+  ]
+}

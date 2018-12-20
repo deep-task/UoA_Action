@@ -1,0 +1,48 @@
+{
+  "id": "791a690f-4856-45af-8052-1b1aa947ea93",
+  "name": "RequestPrescriptionIntent",
+  "auto": true,
+  "contexts": [
+    "welcome"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [
+        {
+          "name": "request-prescription",
+          "parameters": {},
+          "lifespan": 5
+        }
+      ],
+      "parameters": [
+        {
+          "id": "2473a0a7-3117-4f3b-9d52-65046082166b",
+          "required": false,
+          "dataType": "@PrescriptionEntity",
+          "name": "prescription",
+          "value": "$prescription",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": [
+            "ok, can you please tell me your name?",
+            "okay, can you tell me what is your name?"
+          ]
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1533114080,
+  "fallbackIntent": false,
+  "events": []
+}

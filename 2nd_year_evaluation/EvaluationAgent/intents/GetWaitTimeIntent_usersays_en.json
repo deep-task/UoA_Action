@@ -1,0 +1,26 @@
+[
+  {
+    "id": "fb9c8203-a6fc-4581-a684-00b62f91f743",
+    "data": [
+      {
+        "text": "can you tell me how long i will have to wait",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1530067715
+  },
+  {
+    "id": "190de40b-c636-472f-be08-2125275ddc5d",
+    "data": [
+      {
+        "text": "yes can you tell me how long i\u0027ll have to wait",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1530067715
+  }
+]

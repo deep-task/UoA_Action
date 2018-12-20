@@ -1,0 +1,62 @@
+{
+  "id": "838b7f62-f8ca-4fb7-bdee-cf41b93e343c",
+  "name": "WeatherIntent",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "weather",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "ab78b311-ded2-4abb-8e72-37a1a9a350f0",
+          "required": true,
+          "dataType": "@sys.geo-city",
+          "name": "geo-city",
+          "value": "$geo-city",
+          "prompts": [
+            {
+              "lang": "en",
+              "value": "What city you want know?"
+            },
+            {
+              "lang": "en",
+              "value": "Please tell me what city you want know."
+            }
+          ],
+          "isList": false
+        },
+        {
+          "id": "ef1dc266-6396-4c35-94bf-e46997234a1f",
+          "required": true,
+          "dataType": "@sys.geo-country",
+          "name": "geo-country",
+          "value": "$geo-country",
+          "prompts": [
+            {
+              "lang": "en",
+              "value": "Can you tell me what country you want?"
+            }
+          ],
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "Sorry, I can\u0027t connect to server now. Please try again."
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1530500829,
+  "fallbackIntent": false,
+  "events": []
+}

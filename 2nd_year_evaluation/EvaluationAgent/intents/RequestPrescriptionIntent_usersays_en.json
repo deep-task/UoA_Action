@@ -1,0 +1,56 @@
+[
+  {
+    "id": "dbbbd51d-1573-4878-87b3-4e9116c5d795",
+    "data": [
+      {
+        "text": "collect my ",
+        "userDefined": false
+      },
+      {
+        "text": "prescription",
+        "alias": "prescription",
+        "meta": "@PrescriptionEntity",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1530063253
+  },
+  {
+    "id": "b3b854cb-f4a1-4826-a49e-e8cb71582fb0",
+    "data": [
+      {
+        "text": "i am here to collect my ",
+        "userDefined": false
+      },
+      {
+        "text": "prescription",
+        "alias": "prescription",
+        "meta": "@PrescriptionEntity",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1530063253
+  },
+  {
+    "id": "1423f860-37bd-4f34-ae8b-84208ca43792",
+    "data": [
+      {
+        "text": "hi i\u0027m here to collect my ",
+        "userDefined": false
+      },
+      {
+        "text": "prescription",
+        "alias": "prescription",
+        "meta": "@PrescriptionEntity",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1530063253
+  }
+]

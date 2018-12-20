@@ -1,0 +1,42 @@
+{
+  "id": "43fb6240-2197-44d5-950b-009025be129a",
+  "name": "GetWaitTimeIntent",
+  "auto": true,
+  "contexts": [
+    "get-name",
+    "done-checkin"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [
+        {
+          "name": "get-name",
+          "parameters": {},
+          "lifespan": 5
+        },
+        {
+          "name": "get-wait-time",
+          "parameters": {},
+          "lifespan": 5
+        }
+      ],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": "#get-name.given-name, you are next to see Dr. jones, he will be around 5 more minutes. is there anything else I can help you with?"
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1534917775,
+  "fallbackIntent": false,
+  "events": []
+}

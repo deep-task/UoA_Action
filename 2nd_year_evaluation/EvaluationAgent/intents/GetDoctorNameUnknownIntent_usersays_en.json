@@ -1,0 +1,62 @@
+[
+  {
+    "id": "29435cf0-245a-40c8-9c75-73c080c4f6be",
+    "data": [
+      {
+        "text": "I don\u0027t know",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1533538402
+  },
+  {
+    "id": "ce011a71-b67a-4eca-9028-4401cd7fd120",
+    "data": [
+      {
+        "text": "I can\u0027t remember",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1533538402
+  },
+  {
+    "id": "b2e0ba22-7418-4c5e-8f16-3326c9477770",
+    "data": [
+      {
+        "text": "sorry I can\u0027t remember",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1533538402
+  },
+  {
+    "id": "cb60901c-5732-4c90-9ce9-26d97de6c177",
+    "data": [
+      {
+        "text": "I don\u0027t know doctor name",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1533538402
+  },
+  {
+    "id": "d1b05704-752e-41c7-8932-e1ceaafe1fa3",
+    "data": [
+      {
+        "text": "I\u0027m not really sure",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1533538402
+  }
+]
