@@ -87,7 +87,12 @@ class ActionInterfaceNode:
                 self.pub_task_completed.publish(json.dumps(jsonSTTFrame))
 
             rospy.Timer(rospy.Duration(3), stop_gazing, oneshot=True)
- 
+
+        def pub_gaze():
+            pub_target = String()
+            pub_target.data = 'persons:' + action_data['user']
+            self.pub_gaze_focusing.publish(pub_target) 
+
         def raise_elicit_event():
             msg = RaisingEvents()
             msg.header.stamp = rospy.Time.now()
@@ -143,17 +148,16 @@ class ActionInterfaceNode:
         elif task in ['elicit_interest_step_1', 'saying_hello', 'initiation_of_conversation', 'continuation_of_conversation', 'termination_of_conversation', 'elicit_interest', 'saying_good_bye']:
             req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] 
         elif task in ['elicit_interest_step_2']:
-            pub_target = String()
-            pub_target.data = 'persons:' + action_data['user']
-            self.pub_gaze_focusing.publish(pub_target) 
-            raise_elicit_event()
-            req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] 
-        elif task in ['elicit_interest_step_3']:
-            pub_target = String()
-            pub_target.data = 'persons:' + action_data['user']
-            self.pub_gaze_focusing.publish(pub_target)
+            pub_gaze()
             rospy.sleep(0.5)
             raise_elicit_event()
+            rospy.sleep(1.5)
+            req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] 
+        elif task in ['elicit_interest_step_3']:
+            pub_gaze()
+            rospy.sleep(0.5)
+            raise_elicit_event()
+            rospy.sleep(1.5)
             req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<expression=happiness>' + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] 
         elif task in ['action']:
             req_task.reply = '<sm=tag:%s>'%action_data['sm'] + action_data['dialog']
