@@ -6,6 +6,7 @@ import json
 import pdb
 from std_msgs.msg import String
 from mind_msgs.msg import Reply
+from mind_msgs.msg import RaisingEvents
 
 class ActionInterfaceNode:
     def __init__(self):
@@ -14,9 +15,8 @@ class ActionInterfaceNode:
         rospy.Subscriber('/perceptionResult', String, self.handle_perception_result)
         rospy.Subscriber('/taskExecution', String, self.handle_task_execution)
         self.pub_task_completed = rospy.Publisher('/taskCompletion', String, queue_size=10)
-
         self.pub_gaze_focusing = rospy.Publisher('gaze_focusing', String, queue_size=10)
-
+        self.pub_events = rospy.Publisher('raising_events', RaisingEvents, queue_size=10)
         self.silbot_task_requested = False
         rospy.Subscriber('/scene_queue_empty', String, self.handle_silbot_complition)
         self.pub_silbot_execution = rospy.Publisher('/reply_deprecated', Reply, queue_size=10)
@@ -71,6 +71,28 @@ class ActionInterfaceNode:
         if ':' in task:
             task = task.split(':')[0]
         
+        def head_toss_gaze():
+            pub_target = String()
+            pub_target.data = 'persons:' + action_data['user']
+            self.pub_gaze_focusing.publish(pub_target)
+            rospy.sleep(0.5)
+
+            def stop_gazing(event):            
+                pub_target.data = ''
+                self.pub_gaze_focusing.publish(pub_target)
+                rospy.loginfo('published topic to stop gazing(%s)' % action_id )
+
+                jsonSTTFrame = self.create_complete_jsonstr(action_id, action_data['behavior'])
+                rospy.loginfo(jsonSTTFrame)
+                self.pub_task_completed.publish(json.dumps(jsonSTTFrame))
+
+            rospy.Timer(rospy.Duration(3), stop_gazing, oneshot=True)
+ 
+        def raise_elicit_event():
+            msg = RaisingEvents()
+            msg.header.stamp = rospy.Time.now()
+            msg.events.append('elicitable_situation_sensed')
+            self.pub_events.publish(msg)
 
         if task in ['focusing', 'gaze', 'listen_to_human']:
             
@@ -95,15 +117,9 @@ class ActionInterfaceNode:
             # gaze a person and back to neutral
             rospy.loginfo("received head_toss_gaze topic")
 
-            #data = action_data['behavior'].split(':')
-            #encode_data = u' '.join(data).encode('utf-8')
             pub_target = String()
-            #if data[1] != 'end':
             pub_target.data = 'persons:' + action_data['user']
-            #else:
-            #    pub_target.data = ''
             self.pub_gaze_focusing.publish(pub_target)
-
             rospy.sleep(0.5)
 
             def stop_gazing(event):            
@@ -116,6 +132,7 @@ class ActionInterfaceNode:
                 self.pub_task_completed.publish(json.dumps(jsonSTTFrame))
 
             rospy.Timer(rospy.Duration(3), stop_gazing, oneshot=True)
+            # head_toss_gaze()
             return
 
         elif task in ['going_back_to_stand_by_place', 'approach_to_the_user']:
@@ -123,8 +140,21 @@ class ActionInterfaceNode:
             req_task.reply = '<mobility=move:%s>'%(data[1])
             self.pub_silbot_execution.publish(req_task)
             return
-        elif task in ['saying_hello', 'initiation_of_conversation', 'continuation_of_conversation', 'termination_of_conversation', 'elicit_interest', 'saying_good_bye']:
+        elif task in ['elicit_interest_step_1', 'saying_hello', 'initiation_of_conversation', 'continuation_of_conversation', 'termination_of_conversation', 'elicit_interest', 'saying_good_bye']:
             req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] 
+        elif task in ['elicit_interest_step_2']:
+            pub_target = String()
+            pub_target.data = 'persons:' + action_data['user']
+            self.pub_gaze_focusing.publish(pub_target) 
+            raise_elicit_event()
+            req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] 
+        elif task in ['elicit_interest_step_3']:
+            pub_target = String()
+            pub_target.data = 'persons:' + action_data['user']
+            self.pub_gaze_focusing.publish(pub_target)
+            rospy.sleep(0.5)
+            raise_elicit_event()
+            req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<expression=happiness>' + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] 
         elif task in ['action']:
             req_task.reply = '<sm=tag:%s>'%action_data['sm'] + action_data['dialog']
         else:
