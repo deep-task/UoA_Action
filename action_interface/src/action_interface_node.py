@@ -146,19 +146,23 @@ class ActionInterfaceNode:
             self.pub_silbot_execution.publish(req_task)
             return
         elif task in ['elicit_interest_step_1', 'saying_hello', 'initiation_of_conversation', 'continuation_of_conversation', 'termination_of_conversation', 'elicit_interest', 'saying_good_bye']:
-            req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] 
+            req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<expression=neutral>' + '<br=1>' + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] 
         elif task in ['elicit_interest_step_2']:
             pub_gaze()
             rospy.sleep(0.5)
             raise_elicit_event()
-            rospy.sleep(1.5)
-            req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] 
+            rospy.sleep(0.5)
+            pub_gaze()
+            rospy.sleep(0.5)
+            req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<expression=neutral>' + '<br=1>' + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] 
         elif task in ['elicit_interest_step_3']:
             pub_gaze()
             rospy.sleep(0.5)
             raise_elicit_event()
-            rospy.sleep(1.5)
-            req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<expression=happiness>' + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] 
+            rospy.sleep(0.5)
+            pub_gaze()
+            rospy.sleep(0.5)
+            req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<expression=happiness>' + '<br=1>' + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] + '<br=3>' + '<expression=neutral>' 
         elif task in ['action']:
             req_task.reply = '<sm=tag:%s>'%action_data['sm'] + action_data['dialog']
         else:
