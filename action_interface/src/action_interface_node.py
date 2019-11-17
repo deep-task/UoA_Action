@@ -12,7 +12,7 @@ class ActionInterfaceNode:
     def __init__(self):
         self.silbot_task_complition = False
 
-        rospy.Subscriber('/perceptionResult', String, self.handle_perception_result)
+        rospy.Subscriber('/recognitionResult', String, self.handle_perception_result)
         rospy.Subscriber('/taskExecution', String, self.handle_task_execution)
         self.pub_task_completed = rospy.Publisher('/taskCompletion', String, queue_size=10)
         self.pub_gaze_focusing = rospy.Publisher('gaze_focusing', String, queue_size=10)
@@ -35,8 +35,8 @@ class ActionInterfaceNode:
         jsonSTTFrame = {
             "header": {
             "timestamp": "%i.%i" % (current_time.secs, current_time.nsecs),
-            "source": "UOA",
-            "target": ["UOS"],
+            "source": "action",
+            "target": ["planning"],
             "content": ["robot_action"]
             },
         "robot_action": {
@@ -53,7 +53,7 @@ class ActionInterfaceNode:
         recv_data = json.loads(msg.data)
 
         # filter json msg
-        if 'uoa' not in [x.lower() for x in recv_data['header']['target']]:
+        if 'action' not in [x.lower() for x in recv_data['header']['target']]:
             return 
         if 'robot_action' not in recv_data:
             rospy.logerror('message is for uoa but there is no robot_action key')
@@ -145,7 +145,7 @@ class ActionInterfaceNode:
             req_task.reply = '<mobility=move:%s>'%(data[1])
             self.pub_silbot_execution.publish(req_task)
             return
-        elif task in ['elicit_interest_step_1', 'saying_hello', 'initiation_of_conversation', 'continuation_of_conversation', 'termination_of_conversation', 'elicit_interest', 'saying_good_bye']:
+        elif task in ['elicit_interest_step', 'elicit_interest_step_1', 'saying_hello', 'initiation_of_conversation', 'continuation_of_conversation', 'termination_of_conversation', 'elicit_interest', 'saying_good_bye']:
             req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<expression=neutral>' + '<br=1>' + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] 
         elif task in ['elicit_interest_step_2']:
             pub_gaze()
