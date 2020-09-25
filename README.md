@@ -95,3 +95,8 @@ Each topic has json format.
 ## Bug & Feature Requests
 
 Please report bugs and request features using the Issue Tracker.
+
+## Errors
+- ERROR: Failed building wheel for PyAudio
+
+sudo apt install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0 ffmpeg libav-tools
