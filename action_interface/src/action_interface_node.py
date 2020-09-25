@@ -165,8 +165,10 @@ class ActionInterfaceNode:
             req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<expression=happiness>' + '<br=1>' + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] + '<br=3>' + '<expression=neutral>' 
         elif task in ['action']:
             req_task.reply = '<sm=tag:%s>'%action_data['sm'] + action_data['dialog']
+        elif task in ['greetings']:
+            req_task.reply = '<sm=tag:happy>'
         else:
-            rospy.info('task(%s) is not defined' % task)
+            rospy.loginfo('task(%s) is not defined' % task)
             return
 
         self.silbot_task_complition = False
