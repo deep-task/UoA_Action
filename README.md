@@ -17,6 +17,9 @@ These packages are not support binary installation yet.
 
         $ git clone --recursive https://github.com/deep-task/UoA_Action.git
 
+        for 6dof
+        $ git clone --recursive --branch 6dof https://github.com/deep-task/UoA_Action.git
+
 
 #### Dependencies
 
