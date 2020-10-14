@@ -1,6 +1,3 @@
-[submodule "silbot3_shri_render"]
-	path = silbot3_shri_render
-	url = https://github.com/byeongkyu/silbot3_shri_render.git
 [submodule "social_behavior"]
 	path = social_behavior
 	url = https://github.com/jlim262/social_behavior.git
