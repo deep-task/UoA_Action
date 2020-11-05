@@ -51,10 +51,10 @@
     </node>
 
     <!-- Perceptions -->
-    <node name="person_detection" type="person_detection.py" pkg="silbot3_shri_perception" output="screen">
+    <!-- <node name="person_detection" type="person_detection.py" pkg="silbot3_shri_perception" output="screen">
         <param name="config_file" value="$(find silbot3_shri_perception)/config/person_detection.yaml" />
     </node>
 
     <node name="tts" pkg="robocare_tts" type="robocare_tts" />
-    <node name="sound" pkg="robocare_sound" type="sound_node" />
+    <node name="sound" pkg="robocare_sound" type="sound_node" /> -->
 </launch>
