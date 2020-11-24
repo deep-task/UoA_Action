@@ -163,7 +163,7 @@ class ActionInterfaceNode:
             pub_gaze()
             rospy.sleep(0.5)
             req_task.reply = '<gaze=persons:%s>'%action_data['user'] + '<expression=happiness>' + '<br=1>' + '<sm=tag:%s>'%action_data['sm'] + action_data['dialog'] + '<br=3>' + '<expression=neutral>' 
-        elif task in ['action']:
+        elif task in ['action', 'motion_play']:
             req_task.reply = '<sm=tag:%s>'%action_data['sm'] + action_data['dialog']
         elif task in ['greetings']:
             req_task.reply = '<sm=tag:happy>'
